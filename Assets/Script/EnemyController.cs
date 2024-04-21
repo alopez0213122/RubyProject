@@ -15,6 +15,8 @@ public class EnemyController : MonoBehaviour
     bool broken;
     public ParticleSystem smokeEffect;
 
+    public AudioClip fixSound;
+
     public GameObject smoke;
 
     public Text fixedText;

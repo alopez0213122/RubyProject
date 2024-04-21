@@ -21,22 +21,32 @@ public class ScoreCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Particle1.activeInHierarchy == false)
+        score = GameObject.FindGameObjectsWithTag("SMOKE").Length;
+        scoreText.text = ("Robots Left to Fix: " + score);
+        if (score == 0)
         {
-            score++;
-            Destroy(Particle1);
+            scoreText.text = ("Robots Left to Fix: " + score + " You won!");
+            StartCoroutine(DelayEnd());
         }
-        if (Particle2.activeInHierarchy == false)
-        {
-            score++;
-            Destroy(Particle2);
-        }
-
-        scoreText.text = ("Robots Fixed: " + score);
-
-        if (score == 1)
-        {
-            SceneManager.LoadScene("Congrats");
-        }
+        
+        //else
+        //{
+        //    if (Particle2.activeInHierarchy == false)
+        //    {
+        //        score++;
+        //        Destroy(Particle2);
+        //    }
+        //    if (Particle1.activeInHierarchy == false)
+        //    {
+        //        score++;
+        //        Destroy(Particle1);
+        //    }
+        //}
+        
+    }
+    private IEnumerator DelayEnd()
+    {
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("Congrats");
     }
 }

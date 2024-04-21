@@ -37,8 +37,12 @@ public class Projectile : MonoBehaviour
         {
             Destroy(gameObject);
             Debug.Log("Hello");
+            //ScoreCounter score = GetComponent<ScoreCounter>();
+            //score.score++;
         }
 
-            Destroy(gameObject);
+        Destroy(gameObject);
+
+
     }
 }

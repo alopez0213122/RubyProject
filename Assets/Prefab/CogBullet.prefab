@@ -146,3 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7027283312810d40b7c3a2a754f3266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreCanvas: {fileID: 3815398772541794653, guid: df72cc27df9bf2c40b1986b50d3e6c60, type: 3}

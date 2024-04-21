@@ -14,6 +14,10 @@ public class RubyController : MonoBehaviour
 
     public AudioClip throwSound;
     public AudioClip hitSound;
+    public AudioClip speedSound;
+
+    public AnimationClip fall;
+
 
     public int health { get { return currentHealth; } }
     public int currentHealth;
@@ -154,7 +158,9 @@ public class RubyController : MonoBehaviour
             Debug.Log("works");
             StartCoroutine(DelayHealth());
             particlesHeal.SetActive(true);
-            
+            currentHealth = maxHealth;
+            UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
+
 
         }
         if (collision.CompareTag("DAMAGE"))
@@ -171,6 +177,37 @@ public class RubyController : MonoBehaviour
             particlesHurt.SetActive(true);
 
         }
+        if (collision.CompareTag("SPEED"))
+        {
+            PlaySound(speedSound);
+            StartCoroutine(SpeedBoost());
+            Destroy(collision.gameObject);
+        }
+        if (collision.CompareTag("ICE"))
+        {
+            speed = 6;
+        }
+        if (collision.CompareTag("ROOT"))
+        {
+            speed = 1;
+        }
+        if (collision.CompareTag("HOLE"))
+        {
+            animator.SetTrigger("Fall");
+            rigidbody2d.constraints = RigidbodyConstraints2D.FreezeAll;
+            StartCoroutine(DelayEnd());
+        }
+    }
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("ICE"))
+        {
+            speed = 3;
+        }
+        if (collision.CompareTag("ROOT"))
+        {
+            speed = 3;
+        }
     }
     private IEnumerator DelayDamage()
     {
@@ -182,5 +219,17 @@ public class RubyController : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         particlesHeal.SetActive(false);
+    }
+    private IEnumerator SpeedBoost()
+    {
+
+        speed += 3.0f;
+        yield return new WaitForSeconds(3);
+        speed -= 3.0f;
+    }
+    private IEnumerator DelayEnd()
+    {
+        yield return new WaitForSeconds(2);
+        currentHealth = 0;
     }
 }
